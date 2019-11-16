@@ -1,7 +1,7 @@
 '''
 Requirements :
-1) Elasticsearch -> pip install elasticsearch 
-2) Pands library -> pip install pandas
+    Elasticsearch -> pip install elasticsearch 
+
 
 (SHIFT+RightClick to start powershell on folder)
 To start elasticsearch server :
