@@ -11,7 +11,13 @@ To start elasticsearch server :
 To start Kibana server:
 1) Run ./bin/kibana.bat
 2) http://localhost:5601
+
+> 
 '''
+
+# You only need to run this once to create the index
+
+
 from elasticsearch import helpers, Elasticsearch
 import csv
 
