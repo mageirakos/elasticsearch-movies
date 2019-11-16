@@ -3,7 +3,7 @@ After Elasticsearch 5.0 the default similarity algorithm is BM25
 '''
 from elasticsearch import Elasticsearch
 
-def queryInput():
+def queryInput(user_input):
     res = es.search(index="movies", body={"query": {"match": {"title":"{}".format(user_input)}}}, size = 1000)
     hits = res['hits']['total']['value']
     print("Got {} Hits:".format(hits))
@@ -15,7 +15,9 @@ def queryInput():
     except:
         for i in range(1000):
             print(i+1,') ',res['hits']['hits'][i]['_source']['title'])
-return 
+            
+    return
+    
 
 
 es = Elasticsearch()
