@@ -2,7 +2,6 @@
 Requirements :
     Pandas library -> pip install pandas  
     numpy library -> pip install numpy 
-
 We now take into account:
     1) user_Id
     2) ranking results now take into account the user's rating of a movie (if available)
@@ -92,10 +91,12 @@ def finalRanking(query_result_params_df, movie_avg_rating_df, movie_rating_df_pu
     final_df['final_score'] = final_df['BM25_score'] + final_df['avg_rating'] + final_df['user_rating']
     #second pass for the cases where the user has not added a rating for the movie
     final_df['final_score'].fillna(final_df['BM25_score'] + final_df['avg_rating'], inplace=True)
+    #third pass where there is no avg_rating for a movie so we only keep the BM25 score
+    final_df['final_score'].fillna(final_df['BM25_score'], inplace=True)
     
     #Sort the dataframe based on the final_score
     final_df = final_df.sort_values(by = 'final_score', ascending=False).reset_index()
-    final_df.drop('index', axis=1, inplace=True)
+    final_df.drop(['index','genres','userId'], axis=1, inplace=True)
 
     return final_df
 
@@ -109,4 +110,3 @@ if __name__ == "__main__":
     movie_avg_rating_df, movie_rating_df_pu = preProcessing()
     # get to main loop
     startLoop(movie_avg_rating_df, movie_rating_df_pu)
-
