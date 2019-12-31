@@ -239,4 +239,3 @@ if __name__ == "__main__":
     # get to main loop
     # remember movie_rating_df_pu now is AFTER we have clustered the users and filled most NaNs
     startLoop(movie_avg_rating_df, movie_rating_df_pu)
-
