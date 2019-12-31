@@ -63,7 +63,7 @@ def preProcessing():
     
     #In this iteration we cluster users together and avg out missing rating according to the cluster they belong to
     clustered_users_df = clusterUsers(movie_rating_df_pu,movie_avg_rating_df)
-    filled_user_ratings_df = fill_user_ratings(clustered_users_df) 
+    filled_user_ratings_df = fillUserRatings(clustered_users_df) 
 
     return movie_avg_rating_df, filled_user_ratings_df
 
@@ -127,7 +127,7 @@ def finalRanking(query_result_params_df, movie_avg_rating_df, movie_rating_df_pu
     return final_df
 
 
-def fill_user_ratings(clustered_users_df):
+def fillUserRatings(clustered_users_df):
     ''' Fills any NaN rating accoding to mean rating of the movie in the cluster the user belongs to.
     SOS : Keep in mind that we will still have NULL values that are due to the fact that some movies are still not rated. 
     Either withing the users of the cluster or across all users in our dataset '''
@@ -146,7 +146,7 @@ def fill_user_ratings(clustered_users_df):
     return filled_user_ratings_df
 
 
-def combine_with_cluster(df, cluster_labels):
+def combineWithCluster(df, cluster_labels):
     '''combines the labels from KMeans with the Dataframe df'''
     df['cluster'] = pd.Series(cluster_labels, index=df.index)
     return 
@@ -162,7 +162,7 @@ def cartesianProduct(movie_rating_df_pu):
     return temp
 
 
-def fill_NaN_with_avgGenre_rating(movie_rating_df_pu, movie_avg_rating_df):
+def fillNanWithAvgGenreRating(movie_rating_df_pu, movie_avg_rating_df):
     ''' This function fills NaN values based on the average rating of each unique genre combination '''
     #create a df that holds all user-movie combinations
     user_movie_product_df = cartesianProduct(movie_rating_df_pu)
@@ -182,7 +182,7 @@ def fill_NaN_with_avgGenre_rating(movie_rating_df_pu, movie_avg_rating_df):
 
     return movie_rating_df_pu_noNaN
 
-def get_most_rated_movie_columns(user_movie_ratings, max_number_of_movies):
+def getMostRatedMovieColumns(user_movie_ratings, max_number_of_movies):
     '''This function takes in the user's movie rating and a paramater that tells it how many 
     of the most rated (by number of ratings) movies to keep. Then it returns the movieId of those movies
     which happens to be the column name after we have pivoted the dataframe in another function.'''
@@ -206,18 +206,18 @@ def clusterUsers(movie_rating_df_pu, movie_avg_rating_df):
     note: I did not use Standard Scaler because all dimensions represent movies and the values are user ratings.
     Thus, the distance in every dimension is in the same metric. No need to scale or normalize.'''
     # Before clustering we need to fill NaN values. I chose to do this based on the avg rating per unique combination of movie genre
-    movie_rating_df_pu_noNaN = fill_NaN_with_avgGenre_rating(movie_rating_df_pu, movie_avg_rating_df)
+    movie_rating_df_pu_noNaN = fillNanWithAvgGenreRating(movie_rating_df_pu, movie_avg_rating_df)
     # X below pivoted df still has Null Values, which we will fill after the clustering
     X = movie_rating_df_pu.pivot(index='userId', columns='movieId', values='rating')
     # X_noNaN, pivoted, has no NaN values (filled based on genre), which we will use to create the clusters. 
     X_noNaN = movie_rating_df_pu_noNaN.pivot(index='userId', columns='movieId', values='rating')
     #get the 1000 most rated movies from the dataframe that has NaN values
-    best_movie_columns = get_most_rated_movie_columns(X,1000)
+    best_movie_columns = getMostRatedMovieColumns(X,1000)
     X_best_noNaN = X_noNaN[best_movie_columns]
     #run Kmeans and get final predictions
     predictions = predictWithKmeans(6, X_best_noNaN)   
     #combine predictions with initial dataframe X that contains all user-movie-ratings
-    combine_with_cluster(X, predictions)
+    combineWithCluster(X, predictions)
     return X
 
 def predictWithKmeans(clusters, matrix):
