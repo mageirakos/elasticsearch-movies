@@ -106,14 +106,14 @@ def finalRanking(query_result_params_df, movie_avg_rating_df, movie_rating_df_pu
     temp = movie_rating_df_pu.copy(deep=True)
     #drop all rows from the user ratings where the user is not the one we want
     temp.drop(temp[temp['userId'] != int(user_input_user)].index, inplace=True)
-    #add user_rating
+    #add user_rating  ( after clustering this time )
     final_df = final_df.merge(temp, on = 'movieId', how = 'left')
-    final_df.rename(columns = {'rating':'user_rating'}, inplace=True)
+    final_df.rename(columns = {'rating':'user_rating_after_clustering'}, inplace=True)
 
     #for the sake of simplicity our similarity algorithm will be a linear combinationi of the above 3 scores
     final_df['final_score'] = np.nan
     #first pass 
-    final_df['final_score'] = final_df['BM25_score'] + final_df['avg_rating'] + final_df['user_rating']
+    final_df['final_score'] = final_df['BM25_score'] + final_df['avg_rating'] + final_df['user_rating_after_clustering']
     #second pass for the cases where the user has not added a rating for the movie
     final_df['final_score'].fillna(final_df['BM25_score'] + final_df['avg_rating'], inplace=True)
     #third pass where there is no avg_rating for a movie so we only keep the BM25 score
