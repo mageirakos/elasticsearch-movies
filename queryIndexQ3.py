@@ -27,6 +27,8 @@ from sklearn.cluster import KMeans
 #from sklearn.metrics import pairwise_distances
 import warnings
 from itertools import product
+import pickle
+
 
 def queryInput(user_input):
     ''' returns the movie_Id, title, BM25 score '''
@@ -52,7 +54,7 @@ def queryInput(user_input):
 def preProcessing():
     '''Returns the AVG rating of each movie (movie_avg_rating_df)
     and user rating per movie (movie_rating_df_pu)'''
-    print('\nPlease wait while we do some pre-processing.....\n')
+    print('\nPlease wait while we do some pre-processing.....')
     rating_df = pd.read_csv('./data/ratings.csv')  
     #pu = per user
     movie_rating_df_pu = rating_df[['userId','movieId','rating']]
@@ -65,6 +67,10 @@ def preProcessing():
     clustered_users_df = clusterUsers(movie_rating_df_pu,movie_avg_rating_df)
     filled_user_ratings_df = fillUserRatings(clustered_users_df) 
 
+    #let's save filled_user_rating_df so we don't have to re-run all the clustering in the next script
+    print("\nSaving the clustering result...")
+    pickle.dump(filled_user_ratings_df, open("./data/user_ratings_after_clustering.p", "wb"))
+
     return movie_avg_rating_df, filled_user_ratings_df
 
 
@@ -72,14 +78,14 @@ def startLoop(movie_avg_rating_df, movie_rating_df_pu):
     ''' Basically the main function of the program. 
     Takes any pre-processed data as input '''
 
-    print('type "exit" if you want to exit the search')
-    user_input_movie = input("Which movie do you want? (by title): \n")
+    print('\ntype "exit" if you want to exit the search')
+    user_input_movie = input("Which movie do you want? (by title): ")
     
     while( user_input_movie != 'exit' ) :
         
-        user_input_user = input("For which user do you want to search? (int): \n")
+        user_input_user = input("\nFor which user do you want to search? (int): ")
         while ( ( user_input_user.isdigit() == False) ):
-            user_input_user = input("For which user do you want to search? (int): \n")
+            user_input_user = input("\nFor which user do you want to search? (int): ")
 
         #get ranking from Elasticsearch
         query_result_params_df = queryInput(user_input_movie)
