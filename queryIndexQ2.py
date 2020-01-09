@@ -97,6 +97,8 @@ def finalRanking(query_result_params_df, movie_avg_rating_df, movie_rating_df_pu
     #Sort the dataframe based on the final_score
     final_df = final_df.sort_values(by = 'final_score', ascending=False).reset_index()
     final_df.drop(['index','genres','userId'], axis=1, inplace=True)
+    final_df.drop_duplicates(inplace=True)
+
 
     return final_df
 
