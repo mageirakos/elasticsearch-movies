@@ -1,21 +1,10 @@
 '''
 Requirements :
-    ( you could download Anaconda distribution and have all these included )
-    Pandas library -> pip install pandas  
-    numpy library -> pip install numpy 
-    Jupyter notebook -> pip install numpy
-    sklearn library ->
-    Scikit-learn requires:
-        Python (>= 3.5)
-        NumPy (>= 1.11.0)
-        SciPy (>= 0.17.0)
-        joblib (>= 0.11)
-        1) pip install Cython
-        2) pip install scipy
-        3) pip install matplotlib
-        4) pip install -U scikit-learn
-    if using Visual Studio you need to download -> "Microsoft Visual C++ Build Tools": https://visualstudio.microsoft.com/downloads/
+You need to have run q4PreProcessing_notebook.ipynb before running this code. 
+(in anaconda prompt)
+    Jupyter notebook -> conda install -c conda-forge notebook
 
+    
 In this iteration of the code we take into account:
     1) user_Id
     2) ranking results now take into account the user's rating of a movie (if available)
@@ -23,8 +12,6 @@ In this iteration of the code we take into account:
     4) We train a Ranfom Forest Classifier on each user trained on tf-idf data from the title in movies they have rated and the on hot encoding of that movie's genre.
        Then we used said classifier to predict the rating on the rest of the movies. ( This gives a very bad result and should not be followed, it is only done for demonstrative
        purposes, to get some exercise on the pipeline of ML models in an Information Retrival setting)
-
-SOS : This file uses data created by q4PreProcessing_notebook which is a jupyter notebook. Make sure you have run that first or that you already have the pickle files in the correct folders.
 '''
 from elasticsearch import Elasticsearch
 import pandas as pd
