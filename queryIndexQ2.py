@@ -47,10 +47,10 @@ def startLoop(movie_avg_rating_df, movie_rating_df_pu):
     ''' Basically the main function of the program. 
     Takes any pre-processed data as input '''
 
-    print('type "exit" if you want to exit the search')
+    print('type "//exit" if you want to exit the search')
     user_input_movie = input("Which movie do you want? (by title): \n")
     
-    while( user_input_movie != 'exit' ) :
+    while( user_input_movie != '//exit' ) :
         
         user_input_user = input("For which user do you want to search? (int): \n")
         while ( ( user_input_user.isdigit() == False) ):
@@ -64,7 +64,7 @@ def startLoop(movie_avg_rating_df, movie_rating_df_pu):
         print(final_df)
 
 
-        print('type "exit" if you want to exit the search')
+        print('type "//exit" if you want to exit the search')
         user_input_movie = input("Which movie do you want? (by title): \n")
     return
 

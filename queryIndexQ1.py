@@ -22,12 +22,12 @@ def queryInput(user_input):
 
 es = Elasticsearch()
 
-print('type "exit" if you want to exit the search')
+print('type "//exit" if you want to exit the search')
 user_input = input("Which movie do you want? (by title): \n")
 
-while(user_input != 'exit'):
+while(user_input != '//exit'):
     queryInput(user_input)
-    print('type "exit" if you want to exit the search')
+    print('type "//exit" if you want to exit the search')
     user_input = input("Which movie do you want? (by title): \n")
 
     
