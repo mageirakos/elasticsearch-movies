@@ -84,7 +84,7 @@ Also if you are planning on running queryIndexQ4 and q4PreProcessing_notebook ma
 * **q4PreProcessing_notebook**
   * Does all the dataset creattion, model training and additional caclulations needed to create the final models stored as pickle files.
 
-**SOS**   
+**Important note**   
 To run queryIndexQ4 you must first run queryIndexQ3 and q4PreProcessing_notebook which create the initial user clustering and train a RandomForest model for each user respectively. Those are saved as pickle files in ./data/ and are used in queryIndexQ4 for the final ranking.
 
 ## Built With
