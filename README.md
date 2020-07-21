@@ -74,7 +74,7 @@ Also if you are planning on running queryIndexQ4 and q4PreProcessing_notebook ma
   * Also takes into account which user is searching, thus the final ranking's score is BM25 score + user's movie rating.
 
 * **queryIndexQ3**
-  * clusters users together using K-means based on their rating on common movies. Also takes into accoun the genre of the movie. Thus, the ranking score here is BM25 score + user's movie rating + movie rating's from cluster
+  * clusters users together using K-means based on their rating on common movies. Also takes into account the genre of the movie. Thus, the ranking score here is BM25 score + user's movie rating + movie rating's from cluster
 
 * **queryIndexQ4**
   * Also takes into account an [RFC](https://en.wikipedia.org/wiki/Random_forest) model prediction for each user/movie combination. An RFC is trained for each user with datasets created by the tf-idf vectors of the title and a one-hot-encoding from the movie's genre.
