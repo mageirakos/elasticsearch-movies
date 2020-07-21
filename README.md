@@ -1,6 +1,6 @@
 # elasticsearch-movies
 
-A search engine for movies from the MovieLens [MovieLens](https://movielens.org/) dataset improved by creating user profiles using clustering and Machine Learning techniques.
+A search engine for movies from the [MovieLens](https://movielens.org/) dataset improved by creating user profiles using clustering and Machine Learning techniques.
 The goal was to familiarize myself with Elasticsearch and play around with some ML models that could improve the ranking.
 
 The code is broken down into 5 python files and a Jupyter Notebook.  
